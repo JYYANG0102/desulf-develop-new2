@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="0 0 159 24" width="159" height="24">
+  <defs>
+    <font-face font-family="STXinwei" font-size="16" panose-1="2 1 8 0 4 1 1 1 1 1" units-per-em="1000" underline-position="-133" underline-thickness="20" slope="0" x-height="495" cap-height="711" ascent="800.00305" descent="-235.99243" font-weight="400">
+      <font-face-src>
+        <font-face-name name="STXinwei"/>
+      </font-face-src>
+    </font-face>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.17.2\n2021-04-11 03:12:54 +0000</metadata>
+  <g id="Canvas_1" stroke-opacity="1" fill="none" fill-opacity="1" stroke="none" stroke-dasharray="none">
+    <title>Canvas 1</title>
+    <g id="Canvas_1_Layer_1">
+      <title>Layer 1</title>
+      <g id="Group_2">
+        <g id="Graphic_3">
+          <path d="M 10.352 35527137e-22 L 35527137e-22 5.91577 L 35527137e-22 17.7478 L 1.97176 18.8748 L 1.97176 7.05977 L 10.3525 2.27153 L 18.7341 7.05977 L 18.7341 16.6033 L 10.352 21.3925 L 5.91577 18.8569 L 5.91577 9.34824 L 10.352 6.81365 L 14.7896 9.34824 L 14.7896 14.3144 L 10.352 16.8494 L 9.86024 16.5685 L 9.86024 11.6376 L 12.3393 10.2202 L 10.352 9.08471 L 7.888 10.4936 L 7.888 17.7125 L 10.352 19.1209 L 16.7614 15.4579 L 16.7614 8.20471 L 10.352 4.54306 L 3.944 8.20424 L 3.944 20.0009 L 10.352 23.664 L 20.7059 17.7478 L 20.7059 5.91577 Z" fill="#48bb78"/>
+        </g>
+      </g>
+      <g id="Graphic_5">
+        <text transform="translate(27 3.5)" fill="black">
+          <tspan font-family="STXinwei" font-size="16" font-weight="400" fill="black" x="0" y="13">智慧水岛</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>

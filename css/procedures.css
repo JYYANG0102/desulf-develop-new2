@@ -1,0 +1,110 @@
+body{
+    background: gray;
+}
+.figure_title{
+    font: 36px SimSun;
+    fill: black;
+}
+.data_metric{
+    font: 12px SimHei;
+    fill: black;
+}
+
+.procedure_title {
+    font: 19px SimHei;
+    fill: black;
+}
+
+.legend_title {
+    font: 12px SimHei;
+}
+.legend_rect {
+    stroke-width: 1px;
+    stroke: grey;
+    fill: whitesmoke;
+    fill-opacity: 0.3;
+}
+.relation_line {
+    stroke-width: 2px;
+    stroke: dimgray;
+}
+.relation_rect{
+    stroke-width: 2px;
+    stroke: black;
+    fill: darkcyan;
+    fill-opacity: 0.3;
+}
+.relation_rect_input{
+    stroke-width: 2px;
+    stroke: black;
+    fill: antiquewhite;
+    fill-opacity: 0.2;
+}
+.relation_rect_output{
+    stroke-width: 2px;
+    stroke: black;
+    fill: yellow;
+    fill-opacity: 0.4;
+}
+.relation_arrow{
+    stroke-width: 2px;
+    stroke: dimgray;
+    fill: dimgray;
+}
+
+.manual_data {
+    font: 22px Georgia;
+    fill: #ff651e;
+    color: #ff651e;
+}
+.sensor_data {
+    font: 22px Georgia;
+    fill: blue;
+    color: blue;
+}
+.calculated_data {
+    font: 22px Georgia;
+    fill: green;
+    color: green;
+}
+.page_calculated_data {
+    font: 22px Georgia;
+    fill: black;
+    color: black;
+}
+
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color: darkcyan;
+    color: #ffffff;
+    text-align: left;
+    font-size: 24px;
+    font-family: SimSun;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+    text-align: center;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.styled-table tbody tr.active-row {
+    color: #009879;
+}
