@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Test of SVG binding</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+</head>
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <text id="text_content" x="10" y="20" style="fill:red;" data-bind="text: text_content">
+            <tspan x="10" y="45">First line</tspan>
+            <tspan x="10" y="70">Second line</tspan>
+        </text>
+        <text x="30" y="40" style="fill:red;" data-bind="text: text_content">
+            <tspan x="10" y="45">Third line</tspan>
+            <tspan x="10" y="70">Forth line</tspan>
+        </text>
+    </svg>
+
+    <script id="bind-test">
+      function viewModel() {
+        var self = this;
+
+        self.text_content = ko.observable("This is bind content new old.")
+      }
+
+      let model = new viewModel()
+      ko.applyBindings(model)
+    </script>
+</body>
+</html>
