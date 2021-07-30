@@ -592,3 +592,12 @@ function updateChartData(id, v) {
         }
     }
 }
+
+function TextViewModel() {
+    var self = this;
+    self.new_content = ko.observable("Text")
+
+    //self.new_content(document.getElementById("text-area").value)
+
+    return
+}
