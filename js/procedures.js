@@ -39,39 +39,42 @@ function add_svg_texts(canvas, table_id) {
     let table = document.getElementById(table_id);
 
     //skip the first row 0
-    for (let i = 1, row; row = table.rows[i]; i++) {
+    if (table) {
+        for (let i = 1, row; row = table.rows[i]; i++) {
 
-        //iterate through rows
-        //rows would be accessed using the "row"
-        let [id, title, layout_x, layout_y, css] = [0, "NA", 0, 0, "CSS"];
+            //iterate through rows
+            //rows would be accessed using the "row"
+            let [id, title, layout_x, layout_y, css] = [0, "NA", 0, 0, "CSS"];
 
-        for (let j = 0, col; col = row.cells[j]; j++) {
+            for (let j = 0, col; col = row.cells[j]; j++) {
 
-            //iterate through columns
-            //columns would be accessed using the "col"
-            //read the attributes of a procedure
-            switch (j) {
-                case 0:
-                    id = col.innerText;
-                    break;
-                case 1:
-                    title = col.innerText;
-                    break;
-                case 2:
-                    [layout_x, layout_y] = col.innerText.split(",");
-                    break;
-                case 3:
-                    css = col.innerText;
-                    break;
-                default:
-                    break;
+                //iterate through columns
+                //columns would be accessed using the "col"
+                //read the attributes of a procedure
+                switch (j) {
+                    case 0:
+                        id = col.innerText;
+                        break;
+                    case 1:
+                        title = col.innerText;
+                        break;
+                    case 2:
+                        [layout_x, layout_y] = col.innerText.split(",");
+                        break;
+                    case 3:
+                        css = col.innerText;
+                        break;
+                    default:
+                        break;
+                }
             }
+            // console.log(id, title, layout_x, layout_y, css)
+            // draw the procedure with the attributes
+            // with the div of svg format.
+            svg_add_procedure_element(canvas, id, title, layout_x, layout_y, css);
         }
-        // console.log(id, title, layout_x, layout_y, css)
-        // draw the procedure with the attributes
-        // with the div of svg format.
-        svg_add_procedure_element(canvas, id, title, layout_x, layout_y, css);
     }
+
 }
 
 function svg_add_procedure_element(canvas,
@@ -100,52 +103,55 @@ function add_svg_geometry_elements(canvas, html_table_id) {
     let table = document.getElementById(html_table_id);
 
     //skip the first row 0
-    for (let i = 1, row; row = table.rows[i]; i++) {
+    if (table) {
+        for (let i = 1, row; row = table.rows[i]; i++) {
 
-        //iterate through rows
-        //rows would be accessed using the "row" variable
-        let [id, type, x1, x2, x3, x4, css] = [0, "NA", 0, 0, 0, 0, "CSS"];
+            //iterate through rows
+            //rows would be accessed using the "row" variable
+            let [id, type, x1, x2, x3, x4, css] = [0, "NA", 0, 0, 0, 0, "CSS"];
 
-        for (let j = 0, col; col = row.cells[j]; j++) {
+            for (let j = 0, col; col = row.cells[j]; j++) {
 
-            //iterate through columns
-            //columns would be accessed using the "col"
-            //read the attributes of a procedure
-            switch (j) {
-                case 0:
-                    id = col.innerText;
+                //iterate through columns
+                //columns would be accessed using the "col"
+                //read the attributes of a procedure
+                switch (j) {
+                    case 0:
+                        id = col.innerText;
+                        break;
+                    case 1:
+                        type = col.innerText;
+                        break;
+                    case 2:
+                        [x1, x2, x3, x4] = col.innerText.split(",");
+                        break;
+                    case 3:
+                        css = col.innerText;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            // console.log(id, type, x1, x2, x3, x4, css);
+            // draw the procedure with the attributes
+            // with the div of svg format.
+
+            switch (type) {
+                case "line":
+                    svg_add_relation_line(canvas, id, x1, x2, x3, x4, css);
                     break;
-                case 1:
-                    type = col.innerText;
+                case "arrow":
+                    svg_add_relation_arrow(canvas, id, x1, x2, x3, css);
                     break;
-                case 2:
-                    [x1, x2, x3, x4] = col.innerText.split(",");
-                    break;
-                case 3:
-                    css = col.innerText;
+                case "rect":
+                    svg_add_relation_rect(canvas, id, x1, x2, x3, x4, css);
                     break;
                 default:
                     break;
             }
         }
-        // console.log(id, type, x1, x2, x3, x4, css);
-        // draw the procedure with the attributes
-        // with the div of svg format.
-
-        switch (type) {
-            case "line":
-                svg_add_relation_line(canvas, id, x1, x2, x3, x4, css);
-                break;
-            case "arrow":
-                svg_add_relation_arrow(canvas, id, x1, x2, x3, css);
-                break;
-            case "rect":
-                svg_add_relation_rect(canvas, id, x1, x2, x3, x4, css);
-                break;
-            default:
-                break;
-        }
     }
+
 }
 
 function svg_add_relation_line(canvas, id, x1, y1, x2, y2, css_class) {
@@ -298,65 +304,68 @@ function drawWebTable(model_id, view_id) {
     let tb_model = document.getElementById(model_id);
     let tb_view = document.getElementById(view_id).getElementsByTagName('tbody')[0];
 
-    for (let i = 1, row; row = tb_model.rows[i]; i++) {
-        let [id, title, data_bind, css] = ['NA', 'NA', 'text', 'CSS'];
-        for (let j = 0, col; col = row.cells[j]; j++) {
+    if (tb_model && tb_view) {
+        for (let i = 1, row; row = tb_model.rows[i]; i++) {
+            let [id, title, data_bind, css] = ['NA', 'NA', 'text', 'CSS'];
+            for (let j = 0, col; col = row.cells[j]; j++) {
 
-            //iterate through columns
-            //columns would be accessed using the "col"
-            //read the attributes of a procedure
-            switch (j) {
-                case 0:
-                    id = col.innerText;
-                    break;
-                case 1:
-                    title = col.innerText;
-                    break;
-                case 2:
-                    data_bind = col.innerText.split(",");
-                    break;
-                case 3:
-                    css = col.innerText;
-                    break;
-                default:
-                    break;
+                //iterate through columns
+                //columns would be accessed using the "col"
+                //read the attributes of a procedure
+                switch (j) {
+                    case 0:
+                        id = col.innerText;
+                        break;
+                    case 1:
+                        title = col.innerText;
+                        break;
+                    case 2:
+                        data_bind = col.innerText.split(",");
+                        break;
+                    case 3:
+                        css = col.innerText;
+                        break;
+                    default:
+                        break;
+                }
             }
+            let tb_row = tb_view.insertRow(-1);
+            tb_row.id = id + '_tr'; // add attribute "id" in tag <tr>,
+
+            //tb_row.onclick = interactSvgWebTable(canvas, tb_row.id)
+            // tb_row.onclick = function () {
+            //     document.getElementById(tb_row.id).innerHTML = 111
+            //     document.getElementById(tb_row.id).innerHTML = 111
+            //     //alert("Test on click.")
+            // }
+
+            tb_row.onclick = function () {
+                // let table_text_id = tb_row.id.match(/(\S*)_tr/)[1];
+                // console.log(table_text_id);
+                let svg_data_text = canvas.find("text#" + id);
+                console.log(svg_data_text);
+                svg_data_text.animate()
+                    .transform({scale: 2});
+                console.log("End.")
+            }
+
+
+            let tb_cell_title = tb_row.insertCell(0);
+            tb_cell_title.innerHTML = title;
+            tb_cell_title.className = css;
+
+            let tb_cell_value = tb_row.insertCell(1);
+            tb_cell_value.innerHTML = '<span class="'
+                + css + '"'
+                + ' '
+                + 'data-bind="'
+                + data_bind
+                + ':'
+                + id
+                + '"></span>';
         }
-        let tb_row = tb_view.insertRow(-1);
-        tb_row.id = id + '_tr'; // add attribute "id" in tag <tr>,
-
-        //tb_row.onclick = interactSvgWebTable(canvas, tb_row.id)
-        // tb_row.onclick = function () {
-        //     document.getElementById(tb_row.id).innerHTML = 111
-        //     document.getElementById(tb_row.id).innerHTML = 111
-        //     //alert("Test on click.")
-        // }
-
-        tb_row.onclick = function () {
-            // let table_text_id = tb_row.id.match(/(\S*)_tr/)[1];
-            // console.log(table_text_id);
-            let svg_data_text = canvas.find("text#" + id);
-            console.log(svg_data_text);
-            svg_data_text.animate()
-                .transform({scale: 2});
-            console.log("End.")
-        }
-
-
-        let tb_cell_title = tb_row.insertCell(0);
-        tb_cell_title.innerHTML = title;
-        tb_cell_title.className = css;
-
-        let tb_cell_value = tb_row.insertCell(1);
-        tb_cell_value.innerHTML = '<span class="'
-            + css + '"'
-            + ' '
-            + 'data-bind="'
-            + data_bind
-            + ':'
-            + id
-            + '"></span>';
     }
+
 }
 
 function interactSvgWebTable(canvas, web_tr_id) {
@@ -384,6 +393,8 @@ function DesulfParaTbViewmodel() {
     self.m_GYPSUMABSORBING = ko.observable(0.0);
     self.m_EVAPORATIONLOSS = ko.observable(0.0);
     self.c_WASTEWATERVOL = ko.observable(0.0);
+    // text-area
+    self.new_content = ko.observable("Text")
 
     self.c_LEAKWATER = ko.pureComputed(function () {
         return -parseFloat(self.c_WASTEWATERVOL())
