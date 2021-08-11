@@ -81,22 +81,46 @@ function svg_add_procedure_element(canvas,
                                    id, title, x, y, css_class) {
     //define a svg symbol;
     //let svg_symbol = canvas.symbol();
-    canvas.text(title)
-        .attr('id', id)
-        .attr('class', css_class)
-        .font({stretch: "condensed", anchor: "start"})
-        .move(x, y)
-        .on('click', function (e) {
-            if (this.text() == id) {
-                this.text(title);
-            } else {
-                this.text(id);
-            }
-            this.scale(2)
-            this.scale(1/2);
-        });
+
     //move the svg symbol into the pre-defined position;
     //canvas.use(svg_symbol).move(x,y);
+    if (css_class == 'sensor_data' ||
+        css_class == 'manual_data' ||
+        css_class == 'calculated_data') {
+        canvas.plain(title)
+            .attr('id', id)
+            .attr('class', css_class).attr("data-bind", "text: "+ id + "_svg_vm")
+            .font({stretch: "condensed", anchor: "start"})
+            .move(x, y)
+            .on('click', function (e) {
+                if (this.text() == id) {
+                    this.text(title);
+                } else {
+                    this.text(id);
+                }
+                this.scale(2)
+                this.scale(1/2);
+            });
+    } else {
+        canvas.plain(title)
+            .attr('id', id)
+            .attr('class', css_class)
+            .font({stretch: "condensed", anchor: "start"})
+            .move(x, y)
+            .on('click', function (e) {
+                if (this.text() == id) {
+                    this.text(title);
+                } else {
+                    this.text(id);
+                }
+                this.scale(2)
+                this.scale(1/2);
+            });
+    }
+
+
+
+
 }
 
 function add_svg_geometry_elements(canvas, html_table_id) {
@@ -261,11 +285,12 @@ function startMqttClient(host, port) {
                 break;
         }
         // update values of variables in the figure.
-        let figure_svg_node = canvas.find('text#' + id);
-        figure_svg_node.text(parsed_msg.data);
+        // let figure_svg_node = canvas.find('text#' + id);
+        // figure_svg_node.text(parsed_msg.data);
+        svg_view_model.UpdateValuesSVG(id, parsed_msg.data);
 
         // update the values in the table.
-        view_model.UpdateValues(id, parsed_msg.data);
+        table_view_model.UpdateValuesTable(id, parsed_msg.data);
 
         // update the values in the charts of Echarts.
         updateChartData(id, parsed_msg.data);
@@ -393,8 +418,6 @@ function DesulfParaTbViewmodel() {
     self.m_GYPSUMABSORBING = ko.observable(0.0);
     self.m_EVAPORATIONLOSS = ko.observable(0.0);
     self.c_WASTEWATERVOL = ko.observable(0.0);
-    // text-area
-    self.new_content = ko.observable("Text")
 
     self.c_LEAKWATER = ko.pureComputed(function () {
         return -parseFloat(self.c_WASTEWATERVOL())
@@ -403,7 +426,7 @@ function DesulfParaTbViewmodel() {
             + parseFloat(self.s_PROCWATERINCOMING());
     }, this);
 
-    self.UpdateValues = function (id, v) {
+    self.UpdateValuesTable = function (id, v) {
         // console.log(id, v);
         switch (id) {
             case 's_PROCWATERINCOMING':
@@ -417,6 +440,54 @@ function DesulfParaTbViewmodel() {
                 break;
             case 'm_EVAPORATIONLOSS':
                 self.m_EVAPORATIONLOSS(v);
+                break;
+            default:
+                break;
+        }
+    };
+
+}
+
+function TextViewModel() {
+    //text-area view model
+    self.new_text_content = ko.observable("Text");
+}
+
+function SvgViewModel() {
+    var self = this;
+    //svg view model
+    self.s_PROCWATERINCOMING_svg_vm = ko.observable(0.0);
+    self.m_GYPSUMABSORBING_svg_vm = ko.observable(0.0);
+    self.m_EVAPORATIONLOSS_svg_vm = ko.observable(0.0);
+    self.c_WASTEWATERVOL_svg_vm = ko.observable(0.0);
+    self.s_WETDEDUSTING_svg_vm = ko.observable(0.0);
+    self.s_DFLOWWATERSUPP_svg_vm = ko.observable(0.0);
+    self.s_DEFROGWATERVOL_svg_vm = ko.observable(0.0);
+
+
+    self.UpdateValuesSVG = function (id, v) {
+        // console.log(id, v);
+        switch (id) {
+            case 's_PROCWATERINCOMING':
+                self.s_PROCWATERINCOMING_svg_vm(v);
+                break;
+            case 'c_WASTEWATERVOL':
+                self.c_WASTEWATERVOL_svg_vm(v);
+                break;
+            case 'm_GYPSUMABSORBING':
+                self.m_GYPSUMABSORBING_svg_vm(v);
+                break;
+            case 'm_EVAPORATIONLOSS':
+                self.m_EVAPORATIONLOSS_svg_vm(v);
+                break;
+            case 's_WETDEDUSTING':
+                self.s_WETDEDUSTING_svg_vm(v);
+                break;
+            case 's_DFLOWWATERSUPP':
+                self.s_DFLOWWATERSUPP_svg_vm(v);
+                break;
+            case 's_DEFROGWATERVOL':
+                self.s_DEFROGWATERVOL_svg_vm(v);
                 break;
             default:
                 break;
@@ -602,13 +673,4 @@ function updateChartData(id, v) {
             x.data.shift();
         }
     }
-}
-
-function TextViewModel() {
-    var self = this;
-    self.new_content = ko.observable("<td>Text</td>")
-
-    //self.new_content(document.getElementById("text-area").value)
-
-    return
 }

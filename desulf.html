@@ -39,8 +39,8 @@
 
 <!--The following codes belong to the Model of MVC.-->
 <div id="model">
-    <div id="figure-model">
-        <div id="svg-model" data-bind="html: new_content"></div>
+    <div id="figure-model" hidden>
+        <div id="svg-model" data-bind="html: new_text_content"></div>
 <!--        <table id="desulf_procedure_model">-->
 <!--            <thead>-->
 <!--            <tr>-->
@@ -613,7 +613,7 @@
 <!--            </tbody>-->
 <!--        </table>-->
     </div>
-    <div id="table-model" >
+    <div id="table-model" hidden>
         <table id="desulf_parameters_model">
             <thead>
             <tr>
@@ -678,7 +678,7 @@
                     </tbody>
                 </table>
             </div>
-            <textarea id="text-area" style="height:600px;" data-bind="value: new_content" onchange="updateFigure()"></textarea>
+            <textarea id="text-area" style="height:600px;" data-bind="value: new_text_content" onchange="updateFigure()"></textarea>
         </div>
 
 
@@ -701,14 +701,22 @@
 </footer>
 
 <!--The following codes belong to the Controller of MVC.-->
+
 <script id="table-controller">
     drawWebTable("desulf_parameters_model", "desulf_parameters_view");
-    let view_model = new DesulfParaTbViewmodel();
-    ko.applyBindings(view_model)//,
-//        document.getElementById('desulf_parameters_view'));
+    let table_view_model = new DesulfParaTbViewmodel();
+    ko.applyBindings(table_view_model, document.getElementById('desulf_parameters_view'));
+</script>
+
+<script id="text-controller">
+    let text_view_model = new TextViewModel()
+    ko.applyBindings(text_view_model, document.getElementById('text-area'));
+    ko.applyBindings(text_view_model, document.getElementById('svg-model'));
 </script>
 
 <script id="figure-controller">
+    let svg_view_model = new SvgViewModel();
+    console.log("svg_view_model declare successfully.")
     let canvas = SVG().addTo("#desulf_canvas_view").size(1220, 840);
 
     function updateFigure() {
@@ -718,8 +726,18 @@
         drawProcedureRelationship(canvas, "desulf_relation_model");
         drawProcedureTitleText(canvas, "desulf_procedure_model");
         drawProcedureSampleValue(canvas, "desulf_sample_data_model");
+
+        let text_html_collection = document.getElementsByTagName("text")
+        if (text_html_collection.length != 0) {
+            for (let i=0; i < text_html_collection.length; i++) {
+                ko.cleanNode(text_html_collection[i])
+                ko.applyBindings(svg_view_model, text_html_collection[i])
+            }
+        }
     }
 </script>
+
+
 
 
 
